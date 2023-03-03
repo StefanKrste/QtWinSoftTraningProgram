@@ -60,13 +60,16 @@ void Zivotno::Prikazi_Podatoci() {
 
 bool Zivotno::Presmetaj_vakcinacija() {
     time_t now = time(0);
+    struct tm posledna_vakcinacija;
 
-    tm tm{};
-    tm.tm_year = Datum_na_posledna_vakcinacija.getGodina()-1900;
-    tm.tm_mon = Datum_na_posledna_vakcinacija.getMesec()-1;
-    tm.tm_mday = Datum_na_posledna_vakcinacija.getDen()-7;
+    posledna_vakcinacija.tm_year = Datum_na_posledna_vakcinacija.getGodina()-1900;
+    posledna_vakcinacija.tm_mon = Datum_na_posledna_vakcinacija.getMesec()-1;
+    posledna_vakcinacija.tm_mday = Datum_na_posledna_vakcinacija.getDen()-7;
+    posledna_vakcinacija.tm_hour = 0;
+    posledna_vakcinacija.tm_min = 0;
+    posledna_vakcinacija.tm_sec = 0;
     //za da proveram koj treba vo narednata nedela na site im odzemame 7 dena od poslednata vakcinacija
-    time_t datum_na_vakcinacija = mktime(&tm); //tm->time_t
+    time_t datum_na_vakcinacija = mktime(&posledna_vakcinacija); //tm->time_t
 
     if(tip=='c'){
         if(difftime(now, datum_na_vakcinacija)>=(365*24*60*60)){
